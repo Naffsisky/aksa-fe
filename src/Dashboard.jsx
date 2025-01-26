@@ -40,24 +40,34 @@ function Dashboard({ mahasiswa, onDelete }) {
   }
 
   return (
-    <div className="container mx-auto mt-8 p-4 bg-zinc-800 text-white rounded-lg shadow-lg">
+    <div className="container mx-auto mt-8 p-4 bg-amber-400 dark:bg-zinc-800 text-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Data Mahasiswa</h1>
       <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mb-4" onClick={() => navigate('/mahasiswa/tambah')}>
         Tambah Mahasiswa
       </button>
       <div className="flex flex-col md:flex-row justify-between mb-4">
-        <input type="text" placeholder="Cari nama atau NIM" value={keyword} onChange={handleSearch} className="px-4 py-2 rounded-lg bg-zinc-700 text-white mb-2 md:mb-0 md:mr-2" />
-        <select value={filter} onChange={handleFilterChange} className="px-4 py-2 rounded-lg bg-zinc-700 text-white">
+        <input
+          type="text"
+          placeholder="Cari nama atau NIM"
+          value={keyword}
+          onChange={handleSearch}
+          className="px-4 py-2 rounded-lg bg-white text-zinc-800 focus:outline-none focus:ring-1 focus:ring-white dark:bg-zinc-700 dark:text-white border-2 border-solid border-amber-500 dark:border-zinc-600 mb-2 md:mb-0 md:mr-2"
+        />
+        <select
+          value={filter}
+          onChange={handleFilterChange}
+          className="px-4 py-2 rounded-lg bg-white border-2 border-solid border-amber-500 dark:border-zinc-600 focus:outline-none focus:ring-1 focus:ring-white text-zinc-800 dark:bg-zinc-700 dark:text-white"
+        >
           <option value="all">Semua Prodi</option>
           <option value="Informatika">Informatika</option>
           <option value="Sains Data">Sains Data</option>
           <option value="Sistem Informasi">Sistem Informasi</option>
         </select>
       </div>
-      <div className="overflow-x-auto bg-zinc-800 rounded-lg shadow-lg">
-        <table className="w-full my-4">
+      <div className="overflow-x-auto rounded-lg shadow-lg">
+        <table className="w-full">
           <thead>
-            <tr className="bg-zinc-600 text-white">
+            <tr className="bg-white text-amber-400 dark:bg-zinc-600 dark:text-white">
               <th className="px-4 py-2">No</th>
               <th className="px-4 py-2">Nama</th>
               <th className="px-4 py-2">NIM</th>
@@ -70,12 +80,12 @@ function Dashboard({ mahasiswa, onDelete }) {
           <tbody>
             {displayedMahasiswa.length > 0 ? (
               displayedMahasiswa.map((mhs, index) => (
-                <tr key={mhs.id} className="bg-zinc-800 text-white">
+                <tr key={mhs.id} className="bg-amber-500 text-white dark:bg-zinc-800 dark:text-white">
                   <td className="px-4 py-2">{(currentPage - 1) * itemsPerPage + index + 1}</td>
                   <td className="px-4 py-2">{mhs.nama}</td>
                   <td className="px-4 py-2">{mhs.nim}</td>
                   <td className="px-4 py-2">
-                    <a href={`mailto:${mhs.email}`} className="text-blue-500 hover:underline">
+                    <a href={`mailto:${mhs.email}`} className="text-white dark:text-blue-500 hover:underline">
                       {mhs.email}
                     </a>
                   </td>
@@ -105,7 +115,11 @@ function Dashboard({ mahasiswa, onDelete }) {
       </div>
       <div className="pt-3">
         {Array.from({ length: totalPages }, (_, index) => (
-          <button key={index + 1} onClick={() => handlePageChange(index + 1)} className={`px-4 py-2 rounded-lg mx-1 ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-zinc-700 text-slate-400 hover:bg-zinc-600'}`}>
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-4 py-2 rounded-lg mx-1 ${currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-white text-zinc-800 dark:bg-zinc-700 dark:text-slate-400 dark:hover:bg-zinc-600'}`}
+          >
             {index + 1}
           </button>
         ))}

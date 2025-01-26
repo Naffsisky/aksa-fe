@@ -15,7 +15,7 @@ const Profile = ({ user, onUpdateUser, onLogout }) => {
   }
 
   return (
-    <div className="container mx-auto mt-8 p-4 bg-zinc-800 text-white rounded-lg shadow-lg max-w-md">
+    <div className="container mx-auto mt-8 p-4 text-zinc-800 dark:bg-zinc-800 dark:text-white rounded-lg shadow-lg max-w-md">
       <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
       <form
         className="space-y-4"
@@ -26,7 +26,7 @@ const Profile = ({ user, onUpdateUser, onLogout }) => {
       >
         <div>
           <label className="block text-sm font-semibold mb-1">Full Name</label>
-          <input type="text" className="w-full px-4 py-2 rounded-lg bg-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" value={fullname} onChange={(e) => setFullname(e.target.value)} />
+          <input type="text" className="w-full px-4 py-2 rounded-lg bg-amber-400 dark:bg-zinc-700 dark:text-white focus:outline-none focus:ring-2 dark:focus:ring-blue-500" value={fullname} onChange={(e) => setFullname(e.target.value)} />
         </div>
         <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-bold">
           Update

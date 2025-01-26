@@ -11,15 +11,45 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [mahasiswa, setMahasiswa] = useState([])
+  const [theme, setTheme] = useState('system')
   const navigate = useNavigate()
 
   useEffect(() => {
     const storedUser = localStorage.getItem('authUser')
     const storedMahasiswa = localStorage.getItem('mahasiswa') || '[]'
+    const storedTheme = localStorage.getItem('theme') || 'system'
+
     if (storedUser) setUser(JSON.parse(storedUser))
     setMahasiswa(JSON.parse(storedMahasiswa))
+    setTheme(storedTheme)
     setLoading(false)
   }, [])
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const osPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      const appliedTheme = theme === 'system' ? (osPrefersDark ? 'dark' : 'light') : theme
+      document.documentElement.classList.remove('dark', 'light')
+      document.documentElement.classList.add(appliedTheme)
+    }
+    updateTheme()
+
+    if (theme === 'system') {
+      const listener = (e) => {
+        const appliedTheme = e.matches ? 'dark' : 'light'
+        document.documentElement.classList.remove('dark', 'light')
+        document.documentElement.classList.add(appliedTheme)
+      }
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      mediaQuery.addEventListener('change', listener)
+      return () => mediaQuery.removeEventListener('change', listener)
+    }
+  }, [theme])
+
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
+  }
 
   const handleLogin = (userData) => {
     localStorage.setItem('authUser', JSON.stringify(userData))
@@ -61,7 +91,7 @@ const App = () => {
 
   return (
     <>
-      {user && <Navbar fullname={user.fullname} onLogout={handleLogout} />}
+      {user && <Navbar fullname={user.fullname} onLogout={handleLogout} onThemeChange={handleThemeChange} theme={theme} />}
       <Routes>
         <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />} />
         <Route path="/profile" element={user ? <Profile user={user} onUpdateUser={handleUpdateUser} onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
